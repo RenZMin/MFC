@@ -16,7 +16,8 @@
 
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 
-BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
+BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)//相当于左大括号
+	ON_MESSAGE(WM_OUTBAR_NOTIFY, OnOutbarNotify)//不准加分号
 END_MESSAGE_MAP()
 
 // CMainFrame 构造/析构
@@ -150,3 +151,114 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	//return CFrameWndEx::OnCreateClient(lpcs, pContext);
 	return CFrameWnd::OnCreateClient(lpcs, pContext);
 }
+
+//视图切分
+long CMainFrame::OnOutbarNotify(WPARAM wParam, LPARAM lParam)
+{
+	switch (wParam)
+	{
+	case NM_OB_ITEMCLICK:
+		// cast the lParam to an integer to get the clicked item
+	{
+		int index = (int)lParam;
+		CString cText, cs1;
+		cText = wndBar.GetItemText(index);
+		CCreateContext   Context;
+		AfxMessageBox(cText);
+		if (cText == _T("SecMngServer配置"))
+		{
+			Context.m_pNewViewClass = RUNTIME_CLASS(CCfgView);
+			Context.m_pCurrentFrame = this;
+			Context.m_pLastView = (CView *)wndSplitter.GetPane(0, 1);
+			wndSplitter.DeleteView(0, 1);
+			wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CCfgView), CSize(500, 0), &Context);
+			CCfgView *pNewView = (CCfgView *)wndSplitter.GetPane(0, 1);
+			wndSplitter.RecalcLayout();
+			pNewView->OnInitialUpdate();
+			wndSplitter.SetActivePane(0, 1);
+			//IsHisKeyRecovry=0;		   
+		}
+		
+		else if (cText == _T("网点信息管理"))
+		{
+			Context.m_pNewViewClass = RUNTIME_CLASS(CDlgNetInfo);
+			Context.m_pCurrentFrame = this;
+			Context.m_pLastView = (CView *)wndSplitter.GetPane(0, 1);
+			wndSplitter.DeleteView(0, 1);
+			wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CDlgNetInfo), CSize(500, 0), &Context);
+			CDlgNetInfo *pNewView = (CDlgNetInfo *)wndSplitter.GetPane(0, 1);
+			wndSplitter.RecalcLayout();
+			pNewView->OnInitialUpdate();
+			wndSplitter.SetActivePane(0, 1);
+		}
+		
+		else if (cText == _T("后台业务管理"))
+		{
+			//AfxMessageBox(cText);
+			Context.m_pNewViewClass = RUNTIME_CLASS(CSysAll);
+			Context.m_pCurrentFrame = this;
+			Context.m_pLastView = (CView *)wndSplitter.GetPane(0, 1);
+			wndSplitter.DeleteView(0, 1);
+			wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CSysAll), CSize(500, 0), &Context);
+			CSysAll *pNewView = (CSysAll *)wndSplitter.GetPane(0, 1);
+			wndSplitter.RecalcLayout();
+			pNewView->OnInitialUpdate();
+			wndSplitter.SetActivePane(0, 1);
+		}
+	}
+
+	return 0;
+
+	case NM_OB_ONLABELENDEDIT:
+		// cast the lParam to an OUTBAR_INFO * struct; it will contain info about the edited item
+		// return 1 to do the change and 0 to cancel it
+	{
+		/*
+		if(IsLoginOutFlag == 1)
+		{
+		AfxMessageBox("人员已登出，请重新登录CA人员以进行相应操作。");
+		return 1;
+		}
+		*/
+
+		OUTBAR_INFO * pOI = (OUTBAR_INFO *)lParam;
+		TRACE2("Editing item %d, new text:%s\n", pOI->index, pOI->cText);
+	}
+	return 1;
+
+	case NM_OB_ONGROUPENDEDIT:
+		// cast the lParam to an OUTBAR_INFO * struct; it will contain info about the edited folder
+		// return 1 to do the change and 0 to cancel it
+	{
+		/*
+		if(IsLoginOutFlag == 1)
+		{
+		AfxMessageBox("人员已登出，请重新登录人员以进行相应操作。");
+		return 1;
+		}
+		*/
+
+		OUTBAR_INFO * pOI = (OUTBAR_INFO *)lParam;
+		TRACE2("Editing folder %d, new text:%s\n", pOI->index, pOI->cText);
+	}
+	return 1;
+
+	case NM_OB_DRAGITEM:
+		// cast the lParam to an OUTBAR_INFO * struct; it will contain info about the dragged items
+		// return 1 to do the change and 0 to cancel it
+	{
+		/*
+		if(IsLoginOutFlag == 1)
+		{
+		AfxMessageBox("人员已登出，请重新登录人员以进行相应操作。");
+		return 1;
+		}*/
+
+		OUTBAR_INFO * pOI = (OUTBAR_INFO *)lParam;
+		TRACE2("Drag item %d at position %d\n", pOI->iDragFrom, pOI->iDragTo);
+	}
+	return 1;
+	}
+	return 0;
+}
+

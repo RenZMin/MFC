@@ -6,6 +6,9 @@
 #include "GfxSplitterWnd.h"
 #include "GfxOutBarCtrl.h"
 #include "FormBackground.h"
+#include "CfgView.h"
+#include "DlgNetInfo.h"
+#include "SysAll.h"
 class CMainFrame : public CFrameWnd
 {
 	
@@ -40,7 +43,7 @@ public:
 // 生成的消息映射函数
 protected:
 	DECLARE_MESSAGE_MAP()
-
+	afx_msg long OnOutbarNotify(WPARAM wParam, LPARAM lParam);
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 };
 

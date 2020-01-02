@@ -2,19 +2,19 @@
 
 
 
-// CFormBackground 窗体视图
+// CDlgNetInfo 窗体视图
 
-class CFormBackground : public CFormView
+class CDlgNetInfo : public CFormView
 {
-	DECLARE_DYNCREATE(CFormBackground)
+	DECLARE_DYNCREATE(CDlgNetInfo)
 
 protected:
-	CFormBackground();           // 动态创建所使用的受保护的构造函数
-	virtual ~CFormBackground();
+	CDlgNetInfo();           // 动态创建所使用的受保护的构造函数
+	virtual ~CDlgNetInfo();
 
 public:
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_FORMBACKGROUND_FORM };
+	enum { IDD = IDD_DIALOG_NETMNG };
 #endif
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -27,7 +27,6 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
-	virtual void OnDraw(CDC* /*pDC*/);
 };
 
 

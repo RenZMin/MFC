@@ -165,6 +165,33 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
 END
 
+IDD_DIALOG_CFG DIALOGEX 0, 0, 465, 292
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CTEXT           "服务器配置管理界面",IDC_STATIC,89,67,94,29
+    CONTROL         "复选",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,267,65,32,10
+    CONTROL         "单选",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON,267,92,32,10
+    PUSHBUTTON      "确定",IDC_BUTTON1,103,168,50,14
+END
+
+IDD_DIALOG_NETMNG DIALOGEX 0, 0, 460, 286
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Button1",IDC_BUTTON1,94,201,50,14
+    PUSHBUTTON      "Button2",IDC_BUTTON2,164,201,50,14
+    PUSHBUTTON      "Button3",IDC_BUTTON3,231,202,50,14
+    PUSHBUTTON      "Button4",IDC_BUTTON4,297,203,50,14
+    CONTROL         "",IDC_LIST2,"SysListView32",LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,77,54,277,87
+END
+
+IDD_DIALOG_SYSALL DIALOGEX 0, 0, 468, 275
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -226,6 +253,22 @@ BEGIN
         RIGHTMARGIN, 503
         BOTTOMMARGIN, 290
     END
+
+    IDD_DIALOG_CFG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 462
+    END
+
+    IDD_DIALOG_NETMNG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 458
+    END
+
+    IDD_DIALOG_SYSALL, DIALOG
+    BEGIN
+        RIGHTMARGIN, 466
+        BOTTOMMARGIN, 274
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -251,6 +294,29 @@ IDD_FORMBACKGROUND_FORM AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
+
+IDD_DIALOG_CFG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_NETMNG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SYSALL AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_BACK         BITMAP                  "res\\background.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

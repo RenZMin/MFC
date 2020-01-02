@@ -17,7 +17,18 @@
 #define IDI_ICON_REQ                    317
 #define IDI_ICON_SET                    318
 #define IDI_ICON_USER                   319
-#define IDD_DIALOG1                     320
+#define IDB_BITMAP_BACK                 322
+#define IDD_DIALOG_CFG                  325
+#define IDD_DIALOG_NETMNG               327
+#define IDD_DIALOG_SYSALL               329
+#define IDC_BUTTON1                     1000
+#define IDC_BUTTON2                     1001
+#define IDC_CHECK1                      1002
+#define IDC_RADIO1                      1003
+#define IDC_BUTTON3                     1004
+#define IDC_BUTTON4                     1005
+#define IDC_LIST1                       1006
+#define IDC_LIST2                       1007
 #define ID_GFX_SMALLICON                50000
 #define ID_GFX_LARGEICON                50001
 #define ID_GFX_RENAMEITEM               50002
@@ -30,9 +41,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        322
+#define _APS_NEXT_RESOURCE_VALUE        331
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_CONTROL_VALUE         1008
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

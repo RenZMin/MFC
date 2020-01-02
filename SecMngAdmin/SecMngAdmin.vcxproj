@@ -185,6 +185,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CfgView.h" />
+    <ClInclude Include="DlgNetInfo.h" />
     <ClInclude Include="FormBackground.h" />
     <ClInclude Include="GFXGROUPEDIT.H" />
     <ClInclude Include="GFXOUTBARCTRL.H" />
@@ -197,9 +199,12 @@
     <ClInclude Include="SecMngAdminDoc.h" />
     <ClInclude Include="SecMngAdminView.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SysAll.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CfgView.cpp" />
+    <ClCompile Include="DlgNetInfo.cpp" />
     <ClCompile Include="FormBackground.cpp" />
     <ClCompile Include="GFXGROUPEDIT.CPP" />
     <ClCompile Include="GFXOUTBARCTRL.CPP" />
@@ -215,6 +220,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SysAll.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SecMngAdmin.rc" />
@@ -226,6 +232,7 @@
     <None Include="res\SecMngAdmin.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\background.bmp" />
     <Image Include="res\log.ico" />
     <Image Include="res\op_log.ico" />
     <Image Include="res\re.ico" />
