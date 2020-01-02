@@ -10,6 +10,8 @@
 
 #include "SecMngAdminDoc.h"
 #include "SecMngAdminView.h"
+#include "cfg_op.h"
+#include "secmng_globvar.h"//该头文件只能被包含一次，因为里面有全局变量的定义
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -38,8 +40,83 @@ CSecMngAdminApp::CSecMngAdminApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-// 唯一的一个 CSecMngAdminApp 对象
 
+
+int CSecMngAdminApp::readSecMngCfg()
+{
+	int ret = 0;
+	char pValue[64] = { 0 };
+	int pValueLen = sizeof(pValue);
+	//找到exe所在目录F:\C++学习\C++项目学习笔记\SecMngAdmin\Debug\SecMngAdmin.exe
+	//F:\C++学习\C++项目学习笔记\SecMngAdmin\Debug\secmngadmin.ini
+	char strFileName[1024] = { 0 };
+	//获取当前工作模块文件路径
+	GetModuleFileName(AfxGetInstanceHandle(), strFileName, sizeof(strFileName));
+	//拼接文件路径
+	CString  g_strINIPath = strFileName;		//定义Ctring类变量，使用CString API
+	int i = g_strINIPath.ReverseFind('\\');		//自右向左查找'\'
+	g_strINIPath = g_strINIPath.Left(i);		//根据找到的位置提取
+
+	g_strINIPath = g_strINIPath + "\\" + "secmngadmin.ini";
+	//AfxMessageBox(g_strINIPath);
+	//读取DSN
+	ret = GetCfgItem((LPTSTR)(LPCTSTR)g_strINIPath, "DSN", pValue, &pValueLen);
+	if (ret!=0)
+	{
+		//AfxMessageBox("DSN读取失败\n");
+		return -1;
+	}
+	//给全局DSN赋值
+	g_dbSource = pValue;
+	//读取UID
+	memset(pValue, 0, pValueLen);
+	ret = GetCfgItem((LPTSTR)(LPCTSTR)g_strINIPath, "UID", pValue, &pValueLen);
+	if (ret != 0)
+	{
+		//AfxMessageBox("UID读取失败\n");
+		return -1;
+	}
+	//给全局UID赋值
+	g_dbUser = pValue;
+	//读取PWD
+	memset(pValue, 0, pValueLen);
+	ret = GetCfgItem((LPTSTR)(LPCTSTR)g_strINIPath, "PWD", pValue, &pValueLen);
+	if (ret != 0)
+	{
+		//AfxMessageBox("PWD读取失败\n");
+		return -1;
+	}
+	//给全局PWD赋值
+	g_dbpwd = pValue;
+	return 0;
+}
+
+
+int CSecMngAdminApp::NewOdbc_Connet()
+{
+	g_pDB = &myDB;//g_pDB代表一条数据库连接，用于数据库操作
+	CString	strCon;
+	TRY
+	{
+		strCon.Format("DSN=%s;UID=%s;PWD=%s", g_dbSource, g_dbUser, g_dbpwd);
+		//AfxMessageBox("DSN111:" + m_dbDSN + "|UID:" + m_dbUID + "|PWD:" + m_dbPWD);
+		if (g_pDB->OpenEx(strCon, CDatabase::noOdbcDialog) == FALSE)
+		{
+			return -1;
+		}
+	}
+	CATCH_ALL(e)
+	{
+		e->ReportError();//打印异常
+	}
+	END_CATCH_ALL
+	return 0;
+}
+
+
+
+
+// 唯一的一个 CSecMngAdminApp 对象
 CSecMngAdminApp theApp;
 
 
@@ -47,6 +124,7 @@ CSecMngAdminApp theApp;
 
 BOOL CSecMngAdminApp::InitInstance()
 {
+	int ret = 0;
 	CWinApp::InitInstance();
 
 
@@ -55,7 +133,40 @@ BOOL CSecMngAdminApp::InitInstance()
 	// 使用 RichEdit 控件需要 AfxInitRichEdit2()	
 	// AfxInitRichEdit2();
 
+	//弹出对话框，用户输入信息
+	CDlgInitCfg dlgInitCfg;
+
 	// 标准初始化
+	ret = readSecMngCfg();
+	if (ret != 0)
+	{
+		AfxMessageBox("配置文件不存在，请手动输入");
+
+		if (dlgInitCfg.DoModal() == IDCANCEL)
+		{
+			return FALSE;
+		}
+		g_dbSource = dlgInitCfg.m_dbDSN;
+		g_dbUser = dlgInitCfg.m_dbUID;
+		g_dbpwd = dlgInitCfg.m_dbPWD;
+	}
+	else
+	{
+		AfxMessageBox("DSN:" + g_dbSource + "|UID:" + g_dbUser + "|PWD:" + g_dbpwd);
+	}
+
+	//借助全局变量 连接数据库
+	ret = NewOdbc_Connet();
+	if (ret != 0)
+	{
+		AfxMessageBox("数据库连接失败");
+		return FALSE;
+	}
+	else
+		AfxMessageBox("数据库连接成功");
+
+
+
 	// 如果未使用这些功能并希望减小
 	// 最终可执行文件的大小，则应移除下列
 	// 不需要的特定初始化例程

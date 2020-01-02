@@ -8,8 +8,7 @@
 #endif
 
 #include "resource.h"       // 主符号
-
-
+#include "DlgInitCfg.h"
 // CSecMngAdminApp:
 // 有关此类的实现，请参阅 SecMngAdmin.cpp
 //
@@ -23,6 +22,10 @@ public:
 // 重写
 public:
 	virtual BOOL InitInstance();
+
+	//声明
+	int readSecMngCfg();
+	int NewOdbc_Connet();
 
 // 实现
 	afx_msg void OnAppAbout();
