@@ -164,7 +164,7 @@ long CMainFrame::OnOutbarNotify(WPARAM wParam, LPARAM lParam)
 		CString cText, cs1;
 		cText = wndBar.GetItemText(index);
 		CCreateContext   Context;
-		AfxMessageBox(cText);
+		//AfxMessageBox(cText);
 		if (cText == _T("SecMngServer≈‰÷√"))
 		{
 			Context.m_pNewViewClass = RUNTIME_CLASS(CCfgView);

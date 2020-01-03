@@ -1,6 +1,7 @@
 #pragma once
 
-
+#include "SECMNGSRVCFG.h"
+#include "cfg_op.h"
 // CCfgView 对话框
 
 class CCfgView1 : public CDialogEx
@@ -48,12 +49,16 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+	int CCfgView::writeSecMngCfg(char *pItemName, CString pItemValue, char *fileName);
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnLbnSelchangeList1();
-	afx_msg void OnBnClickedButton1();
-	afx_msg void OnBnClickedCheck1();
+
+	CString m_strsrvip;
+	CString m_strsrvmaxnode;
+	CString m_strsrvport;
+	virtual void OnInitialUpdate();
+	afx_msg void OnBnClickedSrvcfg();
 };
 
 

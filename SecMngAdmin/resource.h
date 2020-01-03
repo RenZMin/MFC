@@ -2,7 +2,7 @@
 // Microsoft Visual C++ 生成的包含文件。
 // 供 SecMngAdmin.rc 使用
 //
-#define IDOK2                           2
+#define IDOK_SRVCFG                     2
 #define IDOK3                           3
 #define IDD_FORMBACKGROUND_FORM         9
 #define IDD_ABOUTBOX                    100
@@ -33,9 +33,9 @@
 #define IDC_EDIT_UID                    1009
 #define IDC_EDIT_PWD                    1010
 #define IDC_BUTTON_LINKTEST             1011
-#define IDC_EDIT_DSN2                   1011
-#define IDC_EDIT_UID2                   1012
-#define IDC_EDIT_PWD2                   1013
+#define IDC_EDIT_IP                     1011
+#define IDC_EDIT_PORT                   1012
+#define IDC_EDIT_MAXNODE                1013
 #define IDC_EDIT_DSN3                   1014
 #define IDC_EDIT_UID3                   1015
 #define IDC_EDIT_PWD3                   1016

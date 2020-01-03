@@ -200,6 +200,7 @@
     <ClInclude Include="SecMngAdmin.h" />
     <ClInclude Include="SecMngAdminDoc.h" />
     <ClInclude Include="SecMngAdminView.h" />
+    <ClInclude Include="SECMNGSRVCFG.h" />
     <ClInclude Include="secmng_globvar.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SysAll.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="SecMngAdmin.cpp" />
     <ClCompile Include="SecMngAdminDoc.cpp" />
     <ClCompile Include="SecMngAdminView.cpp" />
+    <ClCompile Include="SECMNGSRVCFG.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

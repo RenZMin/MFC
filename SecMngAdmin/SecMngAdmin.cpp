@@ -152,7 +152,7 @@ BOOL CSecMngAdminApp::InitInstance()
 	}
 	else
 	{
-		AfxMessageBox("DSN:" + g_dbSource + "|UID:" + g_dbUser + "|PWD:" + g_dbpwd);
+		//AfxMessageBox("DSN:" + g_dbSource + "|UID:" + g_dbUser + "|PWD:" + g_dbpwd);
 	}
 
 	//借助全局变量 连接数据库
