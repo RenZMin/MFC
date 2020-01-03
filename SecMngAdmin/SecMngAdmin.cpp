@@ -115,7 +115,6 @@ int CSecMngAdminApp::NewOdbc_Connet()
 
 
 
-
 // 唯一的一个 CSecMngAdminApp 对象
 CSecMngAdminApp theApp;
 
@@ -141,7 +140,7 @@ BOOL CSecMngAdminApp::InitInstance()
 	if (ret != 0)
 	{
 		AfxMessageBox("配置文件不存在，请手动输入");
-
+	
 		if (dlgInitCfg.DoModal() == IDCANCEL)
 		{
 			return FALSE;

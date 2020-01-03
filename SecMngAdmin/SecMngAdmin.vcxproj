@@ -187,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="CfgView.h" />
     <ClInclude Include="cfg_op.h" />
+    <ClInclude Include="DlgAddNetNode.h" />
     <ClInclude Include="DlgInitCfg.h" />
     <ClInclude Include="DlgNetInfo.h" />
     <ClInclude Include="FormBackground.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="SecMngAdmin.h" />
     <ClInclude Include="SecMngAdminDoc.h" />
     <ClInclude Include="SecMngAdminView.h" />
+    <ClInclude Include="SECMNGSECNODE.h" />
     <ClInclude Include="SECMNGSRVCFG.h" />
     <ClInclude Include="secmng_globvar.h" />
     <ClInclude Include="stdafx.h" />
@@ -209,6 +211,7 @@
   <ItemGroup>
     <ClCompile Include="CfgView.cpp" />
     <ClCompile Include="cfg_op.cpp" />
+    <ClCompile Include="DlgAddNetNode.cpp" />
     <ClCompile Include="DlgInitCfg.cpp" />
     <ClCompile Include="DlgNetInfo.cpp" />
     <ClCompile Include="FormBackground.cpp" />
@@ -220,6 +223,7 @@
     <ClCompile Include="SecMngAdmin.cpp" />
     <ClCompile Include="SecMngAdminDoc.cpp" />
     <ClCompile Include="SecMngAdminView.cpp" />
+    <ClCompile Include="SECMNGSECNODE.cpp" />
     <ClCompile Include="SECMNGSRVCFG.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -239,6 +243,7 @@
     <None Include="res\SecMngAdmin.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\C++配套资料\10安全传输项目\10安全传输项目\09-安全传输平台项目-第10天（配置管理终端-读写数据库）\09-安全传输平台项目-第10天（配置管理终端-读写数据库）\4-源码代码\网点信息管理--记录类\secnode_images.bmp" />
     <Image Include="res\background.bmp" />
     <Image Include="res\log.ico" />
     <Image Include="res\op_log.ico" />

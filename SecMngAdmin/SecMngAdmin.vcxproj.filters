@@ -78,6 +78,12 @@
     <ClInclude Include="SECMNGSRVCFG.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DlgAddNetNode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SECMNGSECNODE.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SecMngAdmin.cpp">
@@ -126,6 +132,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SECMNGSRVCFG.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgAddNetNode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SECMNGSECNODE.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -177,6 +189,9 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="res\background.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\..\..\C++配套资料\10安全传输项目\10安全传输项目\09-安全传输平台项目-第10天（配置管理终端-读写数据库）\09-安全传输平台项目-第10天（配置管理终端-读写数据库）\4-源码代码\网点信息管理--记录类\secnode_images.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>
