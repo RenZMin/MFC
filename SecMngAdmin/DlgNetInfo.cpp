@@ -40,6 +40,7 @@ BEGIN_MESSAGE_MAP(CDlgNetInfo, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON_EXACTSEARCH, &CDlgNetInfo::OnBnClickedButtonExactsearch)
 	ON_BN_CLICKED(IDC_BUTTON_IDSEARCH, &CDlgNetInfo::OnBnClickedButtonIdsearch)
 	ON_BN_CLICKED(IDC_BUTTON3, &CDlgNetInfo::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON_EDITNODE, &CDlgNetInfo::OnBnClickedButtonEditnode)
 END_MESSAGE_MAP()
 
 
@@ -245,8 +246,7 @@ void CDlgNetInfo::OnBnClickedButton1()
 	CString tempTime = time.Format("%Y-%m-%d %H:%M:%S");
 	int state = dlgAddNetNode.m_State;
 	int authcode = dlgAddNetNode.m_Autor;
-	DbInitListSecNode(ID, Name, time, state, authcode);
-
+	
 	g_pDB->BeginTrans();//开启事务
 	CSECMNGSECNODE srvCfgAddNode(g_pDB);//到这里 已经有数据库表名了
 
@@ -285,6 +285,7 @@ void CDlgNetInfo::OnBnClickedButton1()
 
 			srvCfgAddNode.Update();//这里才是真正进行了更新操作，提交更新
 		}
+		DbInitListSecNode(ID, Name, time, state, authcode);
 	}
 	CATCH_ALL(e)
 	{
@@ -739,11 +740,221 @@ void CDlgNetInfo::OnBnClickedButton3()
 		return;
 	}
 	
+	int nItem = m_listSecNode.GetNextSelectedItem(pos);//得到选中行
+	CString strTmp = m_listSecNode.GetItemText(nItem, 3);
+	if (strTmp == "正常")
+	{
+		AfxMessageBox("该网点正在使用，请先禁用再删除");
+		return;
+	}
+	CString strId = m_listSecNode.GetItemText(nItem, 0);
+	if (strId == "")
+	{
+		AfxMessageBox("网点编号不允许为空");
+		return;
+	}
+	
+	strTmp.Format("确定要删除编号为【%s】的网点吗？", strId);
+
+	if (AfxMessageBox(strTmp, MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2) == IDNO)
+		return;
 
 
+	int dbflag = 0;
+	char sql[1024];
+	
+	g_pDB->BeginTrans();//开启事务
+	CSECMNGSECNODE srvCfgDeleteNode(g_pDB);//到这里 已经有数据库表名了
+	TRY
+	{
+		memset(sql, 0, sizeof(sql));
+		if (!srvCfgDeleteNode.Open(CRecordset::snapshot, NULL, CRecordset::none))//相当于加上了select from
+		{
+			AfxMessageBox("记录类打开数据库失败");
+			return;
+		}
+		if (!srvCfgDeleteNode.IsEOF())//have result 
+		{
+			sprintf(sql, "delete  from SECMNG.SECNODE WHERE ID='%s'", (LPTSTR)(LPCTSTR)strId);
+			g_pDB->ExecuteSQL(sql);
+		}
+		else
+		{
+			AfxMessageBox("数据库中无对应的网点信息");
+			return;
+		}
+	}
+	CATCH_ALL(e)
+	{
+		e->ReportError();
+		dbflag = 1;
+	}
+	END_CATCH_ALL
+
+	if (dbflag == 0)
+	{
+		g_pDB->CommitTrans();
+		m_listSecNode.DeleteItem(nItem);//从显示界面删除
+		AfxMessageBox("数据库网点信息删除成功");
+	}
+	else
+	{
+		g_pDB->Rollback();
+		return;
+	}
+	if (srvCfgDeleteNode.IsOpen())
+		srvCfgDeleteNode.Close();//断开数据库连接
+	return;
+}
 
 
+void CDlgNetInfo::OnBnClickedButtonEditnode()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CDlgAddNetNode dlgAddNetNode;
+	int dbflag = 0;
+	char sql[1024];
+	char toDate[128];
+	CString ID = NULL;
+	CString Name = NULL;
+	CString netDescription = NULL;
+	CTime time = CTime::GetCurrentTime();
+	CString tempTime = NULL;
+	int state = -1;
+	int authcode =-1;
 
+	
 
+	//用户输入 异常判断
+	POSITION pos = m_listSecNode.GetFirstSelectedItemPosition();
+	if (pos == NULL)
+	{
+		AfxMessageBox("请选择待修改的条目");
+		return;
+	}
+	int selectNum = m_listSecNode.GetSelectedCount();
+	if (selectNum > 1)
+	{
+		AfxMessageBox("你选中了多行记录, 请你选中其中的一条记录！");
+		return;
+	}
+	int nItem = m_listSecNode.GetNextSelectedItem(pos);//得到选中行
+	CString strTmp = m_listSecNode.GetItemText(nItem, 3);
+	CString strId = m_listSecNode.GetItemText(nItem, 0);
 
+	if (strTmp == "正常")
+	{
+		AfxMessageBox("该网点正在使用，请先禁用再进行修改");
+		return;
+	}
+	
+	if (strId == "")
+	{
+		AfxMessageBox("网点编号不允许为空,请选择有效的条目");
+		return;
+	}
+	
+	g_pDB->BeginTrans();//开启事务
+	CSECMNGSECNODE srvCfgAddNode(g_pDB);//到这里 已经有数据库表名了
+	TRY 
+	{
+		memset(sql, 0, sizeof(sql));
+		srvCfgAddNode.m_strFilter.Format("ID='%s'", strId);//相当于where子句有了,根据名字去表里查
+														//查询表的IP列
+		if (!srvCfgAddNode.Open(CRecordset::snapshot, NULL, CRecordset::none))//相当于加上了select from
+		{
+			AfxMessageBox("记录类打开数据库失败");
+			return;
+		}
+		//先将信息显示到弹出框中
+		if (!srvCfgAddNode.IsEOF())
+		{
+			srvCfgAddNode.m_ID.TrimLeft();//左边去空格
+			srvCfgAddNode.m_ID.TrimRight();
+			dlgAddNetNode.m_ID = srvCfgAddNode.m_ID;;//将查询结果 给到控件对应的变量
+
+			srvCfgAddNode.m_NAME.TrimLeft();//左边去空格
+			srvCfgAddNode.m_NAME.TrimRight();
+			dlgAddNetNode.m_Name = srvCfgAddNode.m_NAME;//将查询结果 给到控件对应的变量
+
+			srvCfgAddNode.m_NODEDESC.TrimLeft();//左边去空格
+			srvCfgAddNode.m_NODEDESC.TrimRight();
+			dlgAddNetNode.m_Description = srvCfgAddNode.m_NODEDESC;//将查询结果 给到控件对应的变量
+		
+			dlgAddNetNode.m_State = srvCfgAddNode.m_STATE;
+			dlgAddNetNode.m_Autor = srvCfgAddNode.m_AUTHCODE;
+		}
+		else
+		{
+			AfxMessageBox("数据库中无该条目对应的信息，请深入检查其他错误");
+			return;
+		}
+		
+		if (dlgAddNetNode.DoModal() == IDCANCEL)
+		{
+			return;
+		}
+		UpdateData(FALSE);
+		//从界面往变量传数据
+		UpdateData(TRUE);
+		if (dlgAddNetNode.m_ID.IsEmpty() || dlgAddNetNode.m_Name.IsEmpty() || dlgAddNetNode.m_Description.IsEmpty())
+		{
+			AfxMessageBox("输入数据不允许为空值");
+			return;
+		}
+	    ID = dlgAddNetNode.m_ID;
+		Name = dlgAddNetNode.m_Name;
+		netDescription = dlgAddNetNode.m_Description;
+		time = CTime::GetCurrentTime();
+		tempTime = time.Format("%Y-%m-%d %H:%M:%S");
+		state = dlgAddNetNode.m_State;
+		authcode = dlgAddNetNode.m_Autor;
+		memset(sql, 0, sizeof(sql));
+		memset(toDate, 0, sizeof(toDate));
+		if (ID != strId)
+		{
+			AfxMessageBox("ID更改,将删除本网点并新建网点信息");
+			//删除
+			sprintf(sql, "delete  from SECMNG.SECNODE WHERE ID='%s'", (LPTSTR)(LPCTSTR)strId);
+			g_pDB->ExecuteSQL(sql);
+			//新建
+			srvCfgAddNode.AddNew();//打招呼，告诉数据库 我要加数据了哈
+			srvCfgAddNode.m_ID = ID;
+			srvCfgAddNode.m_NAME = Name;
+			srvCfgAddNode.m_NODEDESC = netDescription;
+			srvCfgAddNode.m_CREATETIME = time;
+			srvCfgAddNode.m_AUTHCODE = authcode;
+			srvCfgAddNode.m_STATE = state;
+
+			srvCfgAddNode.Update();//这里才是真正进行了更新操作，提交更新
+		}
+		else//ID不变 只做更新
+		{
+			memset(sql, 0, sizeof(sql));
+			sprintf(toDate, "to_date('%s', 'yyyy-mm-dd hh24:mi:ss')", tempTime);
+			sprintf(sql, "update SECMNG.SECNODE set NAME='%s',NODEDESC='%s',CREATETIME=%s,AUTHCODE=%d,STATE=%d WHERE ID='%s'", (LPTSTR)(LPCTSTR)Name, (LPTSTR)(LPCTSTR)netDescription, toDate, authcode, state, (LPTSTR)(LPCTSTR)ID);
+			g_pDB->ExecuteSQL(sql);
+		}
+	}
+	CATCH_ALL (e)
+	{
+		e->ReportError();
+		dbflag = 1;
+	}
+	END_CATCH_ALL
+	if (dbflag == 0)
+	{
+		g_pDB->CommitTrans();
+		m_listSecNode.DeleteItem(nItem);//从显示界面删除原网点信息
+		DbInitListSecNode(ID, Name, time, state, authcode);//添加新网点显示
+		AfxMessageBox("数据库网点信息写入成功");
+	}
+	else
+	{
+		g_pDB->Rollback();
+	}
+
+	if (srvCfgAddNode.IsOpen())
+		srvCfgAddNode.Close();//断开数据库连接
+	return;
 }

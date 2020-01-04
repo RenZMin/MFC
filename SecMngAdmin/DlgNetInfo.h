@@ -44,6 +44,7 @@ public:
 	afx_msg void OnBnClickedButtonExactsearch();
 	afx_msg void OnBnClickedButtonIdsearch();
 	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedButtonEditnode();
 };
 
 
