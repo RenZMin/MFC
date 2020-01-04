@@ -115,7 +115,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 
 	wndBar.AddFolder("SecMngServer配置管理", 0);
 	wndBar.AddFolder("SecMngAdmin网点管理", 1);
-	wndBar.AddFolder("人员管理", 2);
+	wndBar.AddFolder("SecMngClient客户端系统", 2);
 	wndBar.AddFolder("设备管理", 3);
 	//wndBar.AddFolder("CA人员操作查询", 4);	
 
@@ -128,7 +128,7 @@ BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext)
 	wndBar.InsertItem(1, 1, "前台业务管理", 4, 0);
 	wndBar.InsertItem(1, 2, "前台交易查询", 3, 0);
 
-	wndBar.InsertItem(2, 0, "创建人员", 3, 0);
+	wndBar.InsertItem(2, 0, "SecMngClient业务", 3, 0);
 	wndBar.InsertItem(2, 1, "冻结人员", 4, 0);
 	wndBar.InsertItem(2, 2, "解冻", 2, 0);
 	wndBar.InsertItem(2, 3, "注销人员", 1, 0);
@@ -207,7 +207,7 @@ long CMainFrame::OnOutbarNotify(WPARAM wParam, LPARAM lParam)
 		}
 	}
 
-	return 0;
+	//return 0;
 
 	case NM_OB_ONLABELENDEDIT:
 		// cast the lParam to an OUTBAR_INFO * struct; it will contain info about the edited item
@@ -221,11 +221,10 @@ long CMainFrame::OnOutbarNotify(WPARAM wParam, LPARAM lParam)
 		}
 		*/
 
-		OUTBAR_INFO * pOI = (OUTBAR_INFO *)lParam;
-		TRACE2("Editing item %d, new text:%s\n", pOI->index, pOI->cText);
+		//OUTBAR_INFO * pOI = (OUTBAR_INFO *)lParam;
+		//TRACE2("Editing item %d, new text:%s\n", pOI->index, pOI->cText);
 	}
-	return 1;
-
+	//return 1;
 	case NM_OB_ONGROUPENDEDIT:
 		// cast the lParam to an OUTBAR_INFO * struct; it will contain info about the edited folder
 		// return 1 to do the change and 0 to cancel it
@@ -238,8 +237,55 @@ long CMainFrame::OnOutbarNotify(WPARAM wParam, LPARAM lParam)
 		}
 		*/
 
-		OUTBAR_INFO * pOI = (OUTBAR_INFO *)lParam;
-		TRACE2("Editing folder %d, new text:%s\n", pOI->index, pOI->cText);
+		int index = (int)lParam;
+		CString cText, cs1;
+		cText = wndBar.GetItemText(index);
+		CCreateContext   Context;
+		//AfxMessageBox(cText);
+		if (cText == _T("SecMngClient业务"))
+		{
+			Context.m_pNewViewClass = RUNTIME_CLASS(ViewClient);
+			Context.m_pCurrentFrame = this;
+			Context.m_pLastView = (CView *)wndSplitter.GetPane(0, 1);
+			wndSplitter.DeleteView(0, 1);
+			wndSplitter.CreateView(0, 1, RUNTIME_CLASS(ViewClient), CSize(500, 0), &Context);
+			ViewClient *pNewView = (ViewClient *)wndSplitter.GetPane(0, 1);
+			wndSplitter.RecalcLayout();
+			pNewView->OnInitialUpdate();
+			wndSplitter.SetActivePane(0, 1);
+			//IsHisKeyRecovry=0;		   
+		}
+
+		else if (cText == _T("网点信息管理"))
+		{
+			Context.m_pNewViewClass = RUNTIME_CLASS(CDlgNetInfo);
+			Context.m_pCurrentFrame = this;
+			Context.m_pLastView = (CView *)wndSplitter.GetPane(0, 1);
+			wndSplitter.DeleteView(0, 1);
+			wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CDlgNetInfo), CSize(500, 0), &Context);
+			CDlgNetInfo *pNewView = (CDlgNetInfo *)wndSplitter.GetPane(0, 1);
+			wndSplitter.RecalcLayout();
+			pNewView->OnInitialUpdate();
+			wndSplitter.SetActivePane(0, 1);
+		}
+
+		else if (cText == _T("后台业务管理"))
+		{
+			//AfxMessageBox(cText);
+			Context.m_pNewViewClass = RUNTIME_CLASS(CSysAll);
+			Context.m_pCurrentFrame = this;
+			Context.m_pLastView = (CView *)wndSplitter.GetPane(0, 1);
+			wndSplitter.DeleteView(0, 1);
+			wndSplitter.CreateView(0, 1, RUNTIME_CLASS(CSysAll), CSize(500, 0), &Context);
+			CSysAll *pNewView = (CSysAll *)wndSplitter.GetPane(0, 1);
+			wndSplitter.RecalcLayout();
+			pNewView->OnInitialUpdate();
+			wndSplitter.SetActivePane(0, 1);
+		}
+
+
+		/*OUTBAR_INFO * pOI = (OUTBAR_INFO *)lParam;
+		TRACE2("Editing folder %d, new text:%s\n", pOI->index, pOI->cText);*/
 	}
 	return 1;
 

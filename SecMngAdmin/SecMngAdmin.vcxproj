@@ -201,12 +201,14 @@
     <ClInclude Include="SecMngAdmin.h" />
     <ClInclude Include="SecMngAdminDoc.h" />
     <ClInclude Include="SecMngAdminView.h" />
+    <ClInclude Include="SECMNGSECKYEINFO.h" />
     <ClInclude Include="SECMNGSECNODE.h" />
     <ClInclude Include="SECMNGSRVCFG.h" />
     <ClInclude Include="secmng_globvar.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SysAll.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="ViewClient.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CfgView.cpp" />
@@ -223,6 +225,7 @@
     <ClCompile Include="SecMngAdmin.cpp" />
     <ClCompile Include="SecMngAdminDoc.cpp" />
     <ClCompile Include="SecMngAdminView.cpp" />
+    <ClCompile Include="SECMNGSECKYEINFO.cpp" />
     <ClCompile Include="SECMNGSECNODE.cpp" />
     <ClCompile Include="SECMNGSRVCFG.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -232,6 +235,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SysAll.cpp" />
+    <ClCompile Include="ViewClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SecMngAdmin.rc" />

@@ -59,6 +59,10 @@ public:
 	CString m_strsrvport;
 	virtual void OnInitialUpdate();
 	afx_msg void OnBnClickedSrvcfg();
+	CString m_Dsn;
+	CString m_Uid;
+	CString m_Pwd;
+	afx_msg void OnBnClickedDsnUidPwd();
 };
 
 

@@ -84,6 +84,12 @@
     <ClInclude Include="SECMNGSECNODE.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ViewClient.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SECMNGSECKYEINFO.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SecMngAdmin.cpp">
@@ -138,6 +144,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SECMNGSECNODE.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewClient.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SECMNGSECKYEINFO.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -152,6 +152,9 @@ BOOL CSecMngAdminApp::InitInstance()
 	else
 	{
 		//AfxMessageBox("DSN:" + g_dbSource + "|UID:" + g_dbUser + "|PWD:" + g_dbpwd);
+
+
+
 	}
 
 	//借助全局变量 连接数据库
@@ -162,7 +165,10 @@ BOOL CSecMngAdminApp::InitInstance()
 		return FALSE;
 	}
 	else
+	{
 		AfxMessageBox("数据库连接成功");
+	}
+		
 
 
 

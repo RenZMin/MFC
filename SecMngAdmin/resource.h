@@ -27,6 +27,8 @@
 #define IDB_BITMAP_SECNODE              333
 #define IDD_DIALOG_AddNetNode           334
 #define IDD_DIALOG_EDITNODE             336
+#define IDD_DIALOG1                     338
+#define IDD_DIALOG_VIEWCLIENT           338
 #define IDC_BUTTON1                     1000
 #define IDC_BUTTON2                     1001
 #define IDC_BUTTON_EDITNODE             1001
@@ -61,6 +63,7 @@
 #define IDC_EDIT_STATE                  1025
 #define IDC_BUTTON_IDSEARCH             1025
 #define IDC_EDIT_NODENAME               1026
+#define IDOK_DSN_UID_PWD                1027
 #define ID_GFX_SMALLICON                50000
 #define ID_GFX_LARGEICON                50001
 #define ID_GFX_RENAMEITEM               50002
@@ -73,9 +76,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        338
+#define _APS_NEXT_RESOURCE_VALUE        340
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1027
+#define _APS_NEXT_CONTROL_VALUE         1028
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

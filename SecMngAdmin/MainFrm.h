@@ -9,6 +9,7 @@
 #include "CfgView.h"
 #include "DlgNetInfo.h"
 #include "SysAll.h"
+#include "ViewClient.h"
 class CMainFrame : public CFrameWnd
 {
 	
